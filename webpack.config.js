@@ -1,20 +1,23 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = () => {
   const CSSExtract = new ExtractTextPlugin('styles.css');
 
   return {
-    entry: './src/app.js',
+    entry: ['babel-polyfill', './src/app.js'],
     devtool: 'source-map',
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true,
       publicPath: '/dist/',
-      open: true,
+      open: false,
     },
+    plugins: [
+      CSSExtract,
+      new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    ],
     output: {
       path: path.join(__dirname, 'public', 'dist'),
       filename: 'bundle.js',
@@ -23,14 +26,14 @@ module.exports = () => {
       rules: [
         {
           loader: 'babel-loader',
-          test: /\.js$/,
+          test: /\.(jsx|js)$/,
           exclude: /node_modules/,
           query: {
             presets: ['react', 'es2015', 'stage-2'],
           },
         },
         {
-          test: /\.s?css$/,
+          test: /\.(sa|sc|c)ss$/,
           use: CSSExtract.extract({
             use: [
               {
@@ -38,12 +41,6 @@ module.exports = () => {
                 options: {
                   sourceMap: true,
                   importLoaders: 1,
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
                 },
               },
               {
@@ -57,9 +54,5 @@ module.exports = () => {
         },
       ],
     },
-    plugins: [
-      CSSExtract,
-      new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-    ],
   };
 };

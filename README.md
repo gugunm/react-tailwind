@@ -18,3 +18,8 @@
 Next, we generate a Tailwind config file. In your terminal type: <br>
 npx tailwindcss init <br>
 create a file called `postcss.config.js` and add this code:
+
+## Tailwind.js
+
+`tailwind init tailwind.js`
+`{ loader: 'postcss-loader', options: { ident: 'postcss', plugins: [ require('postcss-import'), require('tailwindcss'), require('autoprefixer'), ], }, },`

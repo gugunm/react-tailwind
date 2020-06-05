@@ -1,12 +1,11 @@
-@import './base/settings';
-@import './base/base';
-@import './components/button';
-@import './components/header';
+@import "./base/settings";
+@import "./base/base";
+@import "./components/button";
+@import "./components/header";
 
 // Tailwind import
 
-/* Gunakan !important pada scss
-.alert {
-  @apply bg-red-500 #{!important};
-}
-*/
+// Gunakan !important pada scss
+// .btn {
+//   @apply bg-red-500 #{!important};
+// }
